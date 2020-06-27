@@ -13,7 +13,9 @@ namespace AplicacionWebSeguros.Models
         public string Login { get; set; }
         public string Nombres { get; set; }
         [Required(ErrorMessage = "El campo contraseña es obligatorio")]
+        [DataType(DataType.Password)]
         public string Contrasena { get; set; }
         public int? RolId { get; set; }
+        public string RolName { get; set; }
     }
 }

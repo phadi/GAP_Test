@@ -30,14 +30,23 @@ namespace ServiciosSeguros.Repositoios
             }
         }
 
-        public async Task<TbUsuario> GetUsuario(string login, string psw)
+        public async Task<ModeloSeguros.Usuario.TbUsuario> GetUsuario(string login, string psw)
         {
             try
-            {
+            {                               
                 return await (from u in db.TbUsuario
+                              join r in db.TbRol on u.RolId equals r.RolId
                               where u.Contrasena == psw
                                  && u.Login == login
-                              select u).FirstOrDefaultAsync();
+                              select new ModeloSeguros.Usuario.TbUsuario
+                              {
+                                  Login = u.Login,
+                                  Nombres = u.Nombres,
+                                  Contrasena = u.Contrasena,
+                                  RolId = r.RolId,
+                                  RolName = r.Rol,
+                                  UsuarioId = u.UsuarioId
+                              }).FirstOrDefaultAsync();
             }
             catch (Exception ex)
             {
@@ -45,11 +54,21 @@ namespace ServiciosSeguros.Repositoios
             }
         }
 
-        public async Task<List<TbUsuario>> GetUsuarios()
+        public async Task<List<ModeloSeguros.Usuario.TbUsuario>> GetUsuarios()
         {
             try
             {
-                return await db.TbUsuario.ToListAsync();
+                return await (from u in db.TbUsuario
+                              join r in db.TbRol on u.RolId equals r.RolId
+                              select new ModeloSeguros.Usuario.TbUsuario
+                              {
+                                  Login = u.Login,
+                                  Nombres = u.Nombres,
+                                  Contrasena = u.Contrasena,
+                                  RolId = r.RolId,
+                                  RolName = r.Rol,
+                                  UsuarioId = u.UsuarioId
+                              }).ToListAsync();
             }
             catch(Exception ex)
             {

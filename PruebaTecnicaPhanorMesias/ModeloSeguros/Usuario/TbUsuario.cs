@@ -11,6 +11,7 @@ namespace ModeloSeguros.Usuario
         public string Nombres { get; set; }
         public string Contrasena { get; set; }
         public int? RolId { get; set; }
+        public string RolName { get; set; }
 
         public virtual TbRol Rol { get; set; }
     }

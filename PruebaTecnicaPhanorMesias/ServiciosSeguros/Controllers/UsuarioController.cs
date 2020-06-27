@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiciosSeguros.Models;
 using ServiciosSeguros.Repositoios;
+using ServiciosSeguros.Seguridad;
 
 namespace ServiciosSeguros.Controllers
 {
@@ -48,12 +49,9 @@ namespace ServiciosSeguros.Controllers
         {
             try
             {
-                var usuario = await repositorioUsuario.GetUsuario(login,psw);
-                //if (usuario == null)
-                //{
-                //   return NotFound();
-                //}
-
+                Encripta enc = new Encripta();                
+                string desc = enc.EncriptaStr(psw);
+                var usuario = await repositorioUsuario.GetUsuario(login, desc);
                 return Ok(usuario);
             }
             catch (Exception)

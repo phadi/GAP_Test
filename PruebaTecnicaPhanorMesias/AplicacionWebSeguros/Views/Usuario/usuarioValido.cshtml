@@ -1,0 +1,47 @@
+﻿@model AplicacionWebSeguros.Models.tbUsuario
+
+@{
+    ViewBag.Title = "usuarioValido";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>usuarioValido</h2>
+
+<div>
+    <h4>tbUsuario</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UsuarioId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UsuarioId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Login)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Login)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RolName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RolName)
+        </dd>
+
+    </dl>
+</div>

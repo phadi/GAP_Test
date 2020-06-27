@@ -8,9 +8,9 @@ namespace ServiciosSeguros.Repositoios
 {
     public interface IRepositorioUsuario
     {
-        Task<List<TbUsuario>> GetUsuarios();
+        Task<List<ModeloSeguros.Usuario.TbUsuario>> GetUsuarios();
 
-        Task<TbUsuario> GetUsuario(string login, string psw);
+        Task<ModeloSeguros.Usuario.TbUsuario> GetUsuario(string login, string psw);
         Task<int> AddUser(TbUsuario user);
     }
 }
