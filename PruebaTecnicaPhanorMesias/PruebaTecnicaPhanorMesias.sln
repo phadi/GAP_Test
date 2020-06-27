@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.29905.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiciosSeguros", "ServiciosSeguros\ServiciosSeguros.csproj", "{AFCE165A-961B-4731-8EC8-434E91374304}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModeloSeguros", "ModeloSeguros\ModeloSeguros.csproj", "{015396C7-C143-4CD7-B7BF-8BDE2CE5F02C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AplicacionWebSeguros", "AplicacionWebSeguros\AplicacionWebSeguros.csproj", "{FF9C2074-E7D2-48BB-80FE-A5E432E64EBC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{AFCE165A-961B-4731-8EC8-434E91374304}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFCE165A-961B-4731-8EC8-434E91374304}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFCE165A-961B-4731-8EC8-434E91374304}.Release|Any CPU.Build.0 = Release|Any CPU
+		{015396C7-C143-4CD7-B7BF-8BDE2CE5F02C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{015396C7-C143-4CD7-B7BF-8BDE2CE5F02C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{015396C7-C143-4CD7-B7BF-8BDE2CE5F02C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{015396C7-C143-4CD7-B7BF-8BDE2CE5F02C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF9C2074-E7D2-48BB-80FE-A5E432E64EBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF9C2074-E7D2-48BB-80FE-A5E432E64EBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF9C2074-E7D2-48BB-80FE-A5E432E64EBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF9C2074-E7D2-48BB-80FE-A5E432E64EBC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
