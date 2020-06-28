@@ -43,6 +43,10 @@ namespace ServiciosSeguros.Models
 
                 entity.ToTable("tbCliente", "seguro");
 
+                entity.HasIndex(e => e.Documento)
+                    .HasName("AK_DocumentoUser")
+                    .IsUnique();
+
                 entity.Property(e => e.ClienteId).HasColumnName("clienteId");
 
                 entity.Property(e => e.Direccrion)

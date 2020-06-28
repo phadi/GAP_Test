@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Web;
 
-namespace ModeloSeguros.Cliente
+namespace AplicacionWebSeguros.Models
 {
-    public class TbPolizaPorCliente
+    public class tbPolizaPorCliente
     {
         public int PolizaPorClienteId { get; set; }
         public int? ClientreId { get; set; }

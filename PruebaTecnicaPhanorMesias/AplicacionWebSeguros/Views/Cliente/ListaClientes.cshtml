@@ -1,0 +1,80 @@
+﻿@model IEnumerable<AplicacionWebSeguros.Models.tbCliente>
+@using AplicacionWebSeguros.Models;
+
+@{
+    ViewBag.Title = "ListaClientes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    tbUsuario userLog = (tbUsuario)Session["usrValido"];
+}
+
+<h2>Lista de Clientes</h2>
+
+@if (userLog != null)
+{
+    foreach (var item in userLog.permisos)
+    {
+        if (item.Controlador == "Cliente" && item.Accion == "Create")
+        {
+            <p>
+                @Html.ActionLink(item.Titulo, item.Accion, item.Controlador, new { area = "" }, new { @class = "btn btn-primary" })
+            </p>
+        }
+    }
+}
+
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>
+            Nombre Completo
+        </th>
+        <th>
+            Nro. Documento
+        <th>
+            Tipo Documento
+        </th>
+        <th>
+            Dirección
+        </th>
+        <th>
+            Teléfono
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreCompleto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Documento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoDocDesc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Direccrion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @if (userLog != null)
+                {
+                    foreach (var item1 in userLog.permisos)
+                    {
+                        if (item1.nivel == 4 && item1.Accion != "Create")
+                        {
+                            <div class="btn-group">
+                                @Html.ActionLink(item1.Titulo, item1.Accion, new { id = item.ClienteId }, new { @class = "btn btn-default" })
+                            </div>
+                        }
+
+                    }
+                }
+            </td>
+        </tr>
+    }
+
+</table>

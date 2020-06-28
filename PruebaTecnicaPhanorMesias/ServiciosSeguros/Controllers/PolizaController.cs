@@ -68,8 +68,8 @@ namespace ServiciosSeguros.Controllers
         {
             try
             {
-                var usuarios = await repositorioPoliza.GetPoliza(polizaId);
-                return Ok(usuarios);
+                var poliza = await repositorioPoliza.GetPoliza(polizaId);
+                return Ok(poliza);
             }
             catch (Exception)
             {
@@ -84,13 +84,13 @@ namespace ServiciosSeguros.Controllers
         {
             try
             {
-                var usuarios = await repositorioPoliza.GetPolizas();
-                if (usuarios == null)
+                var polizas = await repositorioPoliza.GetPolizas();
+                if (polizas == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(usuarios);
+                return Ok(polizas);
             }
             catch (Exception)
             {
@@ -107,10 +107,10 @@ namespace ServiciosSeguros.Controllers
             {
                 try
                 {
-                    var usuarioId = await repositorioPoliza.AddPoliza(model);
-                    if (usuarioId > 0)
+                    var polizaId = await repositorioPoliza.AddPoliza(model);
+                    if (polizaId > 0)
                     {
-                        return Ok(usuarioId);
+                        return Ok(polizaId);
                     }
                     else
                     {

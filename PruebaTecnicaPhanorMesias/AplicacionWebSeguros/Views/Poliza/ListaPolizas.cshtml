@@ -18,7 +18,6 @@
                 @Html.ActionLink(item.Titulo, item.Accion,item.Controlador, new { area = "" }, new { @class = "btn btn-primary" })
             </p>
         }
-        <label> </label>
     }
 }
 
@@ -85,9 +84,11 @@
                     {
                         if (item1.nivel == 3 && item1.Accion != "Create")
                         {
-                            <p>@Html.ActionLink(item1.Titulo, item1.Accion, new { id = item.PolizaId })</p>
+                            <div class="btn-group">
+                                @Html.ActionLink(item1.Titulo, item1.Accion, new { id = item.PolizaId }, new { @class = "btn btn-default" })
+                            </div>
                         }
-                        
+
                     }
                 }
             </td>

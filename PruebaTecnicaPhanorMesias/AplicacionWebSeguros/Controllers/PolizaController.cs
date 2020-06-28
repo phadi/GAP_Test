@@ -303,7 +303,7 @@ namespace AplicacionWebSeguros.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", "Error en el servicio de crear Poliza. " + ex.Message);
+                ModelState.AddModelError("", "Error en el servicio de eliminar Poliza. " + ex.Message);
             }
 
             tbPoliza poliza = new tbPoliza();

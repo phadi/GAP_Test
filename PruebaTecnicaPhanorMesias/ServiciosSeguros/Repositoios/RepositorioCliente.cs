@@ -14,24 +14,93 @@ namespace ServiciosSeguros.Repositoios
         {
             db = _db;
         }
-        public Task<int> AddCliente(Models.TbCliente cliente)
+        public async Task<int> AddCliente(Models.TbCliente cliente)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await db.TbCliente.AddAsync(cliente);
+                await db.SaveChangesAsync();
+
+                return cliente.ClienteId;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public Task<int> DeleteCliente(int? clienteId)
+        public async Task<int> DeleteCliente(int? clienteId)
         {
-            throw new NotImplementedException();
+            int result = 0;
+
+            if (db != null)
+            {
+                try
+                {
+                    //Encuentra la poliza a eliminar
+                    var cliente = await db.TbCliente.FirstOrDefaultAsync(x => x.ClienteId == clienteId);
+
+                    if (cliente != null)
+                    {
+                        db.TbCliente.Remove(cliente);
+                        result = await db.SaveChangesAsync();
+                    }
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return result;
         }
 
-        public Task<ModeloSeguros.Cliente.TbCliente> GetCliente(int clienteId)
+        public async Task<ModeloSeguros.Cliente.TbCliente> GetCliente(int clienteId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await(from p in db.TbCliente
+                             join c in db.TbTipoDoc on p.TipoDoc equals c.TipoDocId
+                             where p.ClienteId == clienteId
+                             select new ModeloSeguros.Cliente.TbCliente
+                             {
+                                 ClienteId = p.ClienteId,
+                                 NombreCompleto = p.NombreCompleto,
+                                 Documento = p.Documento,
+                                 TipoDoc = c.TipoDocId,
+                                 TipoDocDesc = c.TipoDocumento,
+                                 Direccrion = p.Direccrion,
+                                 Telefono = p.Telefono
+                             }).FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public Task<List<ModeloSeguros.Cliente.TbCliente>> GetClientes()
+        public async Task<List<ModeloSeguros.Cliente.TbCliente>> GetClientes()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await(from p in db.TbCliente
+                             join c in db.TbTipoDoc on p.TipoDoc equals c.TipoDocId
+                             select new ModeloSeguros.Cliente.TbCliente
+                             {
+                                 ClienteId = p.ClienteId,
+                                 NombreCompleto = p.NombreCompleto,
+                                 Documento = p.Documento,
+                                 TipoDoc = c.TipoDocId,
+                                 TipoDocDesc = c.TipoDocumento,
+                                 Direccrion = p.Direccrion,
+                                 Telefono = p.Telefono
+                             }).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<List<TbTipoDoc>> GetTipoDoc()
@@ -47,9 +116,20 @@ namespace ServiciosSeguros.Repositoios
             }
         }
 
-        public Task UpdateCliente(Models.TbCliente cliente)
+        public async Task UpdateCliente(Models.TbCliente cliente)
         {
-            throw new NotImplementedException();
+            if (db != null)
+            {
+                try
+                {
+                    db.TbCliente.Update(cliente);
+                    await db.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
         }
     }
 }
