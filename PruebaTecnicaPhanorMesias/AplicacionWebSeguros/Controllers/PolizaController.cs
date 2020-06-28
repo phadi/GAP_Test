@@ -72,69 +72,276 @@ namespace AplicacionWebSeguros.Controllers
 
             if (ModelState.IsValid)
             {
-                try
+                List<string> valida = reglasNegocio(model);
+
+                if (valida.Count == 0)
                 {
-                    byte[] data = null;
-                    string json = JsonConvert.SerializeObject(model);
-                    data = UTF8Encoding.UTF8.GetBytes(json);
-
-                    string urlServicio = WebConfigurationManager.AppSettings["urlServicioPoliza"].ToString() + "AddPoliza";
-                    //LLama servicio
-                    string body = llamaServicio(urlServicio, data, "POST");
-                    int respData = 0;
-
-                    if (!string.IsNullOrEmpty(body))
-                        respData = int.Parse(Json(body).Data.ToString());
-
-                    if (respData != 0)
-                        return RedirectToAction("ListaPolizas");
-                    else
+                    try
                     {
-                        ModelState.AddModelError("", "Error en el servicio de crear Poliza.");
+                        byte[] data = null;
+                        string json = JsonConvert.SerializeObject(model);
+                        data = UTF8Encoding.UTF8.GetBytes(json);
+
+                        string urlServicio = WebConfigurationManager.AppSettings["urlServicioPoliza"].ToString() + "AddPoliza";
+                        //LLama servicio
+                        string body = llamaServicio(urlServicio, data, "POST");
+                        int respData = 0;
+
+                        if (!string.IsNullOrEmpty(body))
+                            respData = int.Parse(Json(body).Data.ToString());
+
+                        if (respData != 0)
+                            return RedirectToAction("ListaPolizas");
+                        else
+                            ModelState.AddModelError("", "Error en el servicio de crear Poliza.");
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.StartsWith("Reglas Invalidas: "))
+                        {
+                            ModelState.AddModelError("", ex.Message);
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Error en el servicio de Crear Poliza. " + ex.Message);
+                        }
                         
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    ModelState.AddModelError("", "Error en el servicio de crear Poliza. " + ex.Message);
-                }
+                    foreach (string st in valida)
+                    {
+                        ModelState.AddModelError("", st);
+                    }
+                }                
             }
 
             combos((int)model.TipoCubrimiento, (int)model.TipoRiesgo);
             return View(model);
         }
 
-        public ActionResult Edit()
+        public ActionResult Edit(int? id)
         {
             userLog = (tbUsuario)Session["usrValido"];
             if (userLog == null)
             {
                 return RedirectToAction("Login", "Usuario");
             }
-            return View();
+
+            if(id == null)
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+
+            //Variables  
+            tbPoliza poliza = new tbPoliza();
+            string urlServicio = WebConfigurationManager.AppSettings["urlServicioPoliza"].ToString() + "GetPoliza?polizaId=" + id.ToString();
+            //LLama servicio
+            string body = llamaServicio(urlServicio, null, "GET");
+            //Valida usuario valido
+            if (string.IsNullOrEmpty(body))
+            {
+                ModelState.AddModelError("", "Error al cargar la Poliza.");
+                poliza.TipoCubrimiento = 0;
+                poliza.TipoRiesgo = 0;
+                return View(poliza);
+            }
+            else
+            {
+                string respData = Json(body).Data.ToString();
+                poliza = JsonConvert.DeserializeObject<tbPoliza>(respData);
+            }
+                
+
+            combos((int)poliza.TipoCubrimiento, (int)poliza.TipoRiesgo);
+            return View(poliza);
         }
 
-        public ActionResult Details()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(tbPoliza poliza)
         {
             userLog = (tbUsuario)Session["usrValido"];
             if (userLog == null)
             {
                 return RedirectToAction("Login", "Usuario");
             }
-            return View();
+
+            if (ModelState.IsValid)
+            {
+                List<string> valida = reglasNegocio(poliza);
+
+                if (valida.Count == 0)
+                {
+                    try
+                    {
+                        byte[] data = null;
+                        string json = JsonConvert.SerializeObject(poliza);
+                        data = UTF8Encoding.UTF8.GetBytes(json);
+
+                        string urlServicio = WebConfigurationManager.AppSettings["urlServicioPoliza"].ToString() + "UpdatePoliza";
+                        //LLama servicio
+                        string body = llamaServicio(urlServicio, data, "POST");
+                        return RedirectToAction("ListaPolizas");
+                    }
+                    catch (Exception ex)
+                    {
+                        ModelState.AddModelError("", "Error en el servicio de Actualizar Poliza. " + ex.Message);
+                    }
+                }
+                else
+                {
+                    foreach (string st in valida)
+                    {
+                        ModelState.AddModelError("", st);
+                    }
+                }
+
+            }
+
+            combos((int)poliza.TipoCubrimiento, (int)poliza.TipoRiesgo);
+            return View(poliza);
         }
 
-        public ActionResult Delete()
+        public ActionResult Details(int? id)
         {
             userLog = (tbUsuario)Session["usrValido"];
             if (userLog == null)
             {
                 return RedirectToAction("Login", "Usuario");
             }
-            return View();
+
+            if (id == null)
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+
+            //Variables  
+            tbPoliza poliza = new tbPoliza();
+            string urlServicio = WebConfigurationManager.AppSettings["urlServicioPoliza"].ToString() + "GetPoliza?polizaId=" + id.ToString();
+            //LLama servicio
+            string body = llamaServicio(urlServicio, null, "GET");
+            //Valida usuario valido
+            if (string.IsNullOrEmpty(body))
+            {
+                ModelState.AddModelError("", "Error al cargar la Poliza.");
+                poliza.TipoCubrimiento = 0;
+                poliza.TipoRiesgo = 0;
+                return View(poliza);
+            }
+            else
+            {
+                string respData = Json(body).Data.ToString();
+                poliza = JsonConvert.DeserializeObject<tbPoliza>(respData);
+            }
+            
+            return View(poliza);
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            userLog = (tbUsuario)Session["usrValido"];
+            if (userLog == null)
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+
+            //Variables  
+            tbPoliza poliza = new tbPoliza();
+            string urlServicio = WebConfigurationManager.AppSettings["urlServicioPoliza"].ToString() + "GetPoliza?polizaId=" + id.ToString();
+            //LLama servicio
+            string body = llamaServicio(urlServicio, null, "GET");
+            //Valida usuario valido
+            if (string.IsNullOrEmpty(body))
+            {
+                ModelState.AddModelError("", "Error al cargar la Poliza.");
+                poliza.TipoCubrimiento = 0;
+                poliza.TipoRiesgo = 0;
+                return View(poliza);
+            }
+            else
+            {
+                string respData = Json(body).Data.ToString();
+                poliza = JsonConvert.DeserializeObject<tbPoliza>(respData);
+            }
+
+            return View(poliza);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            string urlServicio;
+            string body;
+            try
+            {
+                tbPoliza pol = new tbPoliza();
+                pol.PolizaId = id;
+                byte[] data = null;
+                string json = JsonConvert.SerializeObject(pol);
+                data = UTF8Encoding.UTF8.GetBytes(json);
+
+                urlServicio = WebConfigurationManager.AppSettings["urlServicioPoliza"].ToString() + "DeletePoliza";
+                //LLama servicio
+                body = llamaServicio(urlServicio, data, "POST");
+                int respData = 0;
+
+                if (!string.IsNullOrEmpty(body))
+                    respData = int.Parse(Json(body).Data.ToString());
+
+                if (respData != 0)
+                    return RedirectToAction("ListaPolizas");
+                else
+                    ModelState.AddModelError("", "Error en el servicio de eliminar Poliza.");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Error en el servicio de crear Poliza. " + ex.Message);
+            }
+
+            tbPoliza poliza = new tbPoliza();
+            urlServicio = WebConfigurationManager.AppSettings["urlServicioPoliza"].ToString() + "GetPoliza?polizaId=" + id.ToString();
+            //LLama servicio
+            body = llamaServicio(urlServicio, null, "GET");
+            //Valida usuario valido
+            if (string.IsNullOrEmpty(body))
+            {
+                ModelState.AddModelError("", "Error al cargar la Poliza.");
+                poliza.TipoCubrimiento = 0;
+                poliza.TipoRiesgo = 0;
+                return View(poliza);
+            }
+            else
+            {
+                string respData = Json(body).Data.ToString();
+                poliza = JsonConvert.DeserializeObject<tbPoliza>(respData);
+            }
+
+            return View(poliza);
         }
 
         #region metodos
+
+        public List<string> reglasNegocio(tbPoliza poliza)
+        {
+            List<string> resp = new List<string>();
+
+            if(poliza.TipoRiesgo == 4 && poliza.Cubrimiento > 50)
+            {
+                resp.Add("El porcentaje de cubrimiento no puede superar el 50% para riesgos altos");
+            }
+
+            
+
+            return resp;
+        }
 
         public void combos(int cubri, int ries)
         {

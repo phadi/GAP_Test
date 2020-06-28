@@ -7,9 +7,17 @@
 }
 
 <h2>Gestión de Seguros</h2>
-<p> @Html.ActionLink("Polizas", "ListaPolizas", "Poliza", new { area = "" }, new { @class = "btn btn-primary" })</p>
-<p> @Html.ActionLink("Clientes", "Index", "Home", new { area = "" }, new { @class = "btn btn-primary" })</p>
-<p> @Html.ActionLink("Polizas Por Ciente", "Index", "Home", new { area = "" }, new { @class = "btn btn-primary" })</p>
+@if (userLog != null)
+{
+    foreach (var item in userLog.permisos)
+    {
+        if (item.nivel == 2)
+        {
+            @Html.ActionLink(item.Titulo, item.Accion, item.Controlador, new { area = "" }, new { @class = "btn btn-primary" }) 
+        }
+        <label> </label>
+    } 
+}
 
 
 

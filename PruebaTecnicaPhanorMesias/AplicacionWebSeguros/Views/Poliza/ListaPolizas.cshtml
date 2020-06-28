@@ -1,76 +1,97 @@
 ﻿@model IEnumerable<AplicacionWebSeguros.Models.tbPoliza>
+@using AplicacionWebSeguros.Models;
 
 @{
     ViewBag.Title = "Lista de Polizas";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    tbUsuario userLog = (tbUsuario)Session["usrValido"];
 }
 
 <h2>Lista de Polizas</h2>
+@if (userLog != null)
+{
+    foreach (var item in userLog.permisos)
+    {
+        if (item.Controlador == "Poliza" && item.Accion == "Create" )
+        {
+            <p>
+                @Html.ActionLink(item.Titulo, item.Accion,item.Controlador, new { area = "" }, new { @class = "btn btn-primary" })
+            </p>
+        }
+        <label> </label>
+    }
+}
 
-<p>
-    @Html.ActionLink("Crear Poliza", "Create")
-</p>
-<table class="table">
-    <tr>        
+<table class="table table-bordered table-striped">
+    <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Nombre)
+            Nombre de la Poliza
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Descriocion)
+            Descripción
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TipoCubrimiento)
+            Tipo de cubrimiento
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Cubrimiento)
+            Cubrimiento (%)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.InicioVigencia)
+            Fecha Inicio Vigencia
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PeriodoCobertura)
+            Periodo (meses)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Precio)
+            Precio ($)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TipoRiesgo)
+            Tipo de riesgo
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>        
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Descriocion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TipoCubrimientoDesc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cubrimiento)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.InicioVigencia)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PeriodoCobertura)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Precio)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TipoRiesgoDesc)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PolizaId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PolizaId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PolizaId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descriocion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoCubrimientoDesc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cubrimiento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InicioVigencia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PeriodoCobertura)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoRiesgoDesc)
+            </td>
+            <td>
+                @if (userLog != null)
+                {
+                    foreach (var item1 in userLog.permisos)
+                    {
+                        if (item1.nivel == 3 && item1.Accion != "Create")
+                        {
+                            <p>@Html.ActionLink(item1.Titulo, item1.Accion, new { id = item.PolizaId })</p>
+                        }
+                        
+                    }
+                }
+            </td>
+        </tr>
+    }
 
 </table>

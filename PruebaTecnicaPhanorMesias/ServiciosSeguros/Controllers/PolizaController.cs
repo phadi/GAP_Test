@@ -63,6 +63,22 @@ namespace ServiciosSeguros.Controllers
         }
 
         [HttpGet]
+        [Route("GetPoliza")]
+        public async Task<IActionResult> GetPoliza(int polizaId)
+        {
+            try
+            {
+                var usuarios = await repositorioPoliza.GetPoliza(polizaId);
+                return Ok(usuarios);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
+        }
+
+        [HttpGet]
         [Route("GetPolizas")]
         public async Task<IActionResult> GetPolizas()
         {
@@ -91,7 +107,7 @@ namespace ServiciosSeguros.Controllers
             {
                 try
                 {
-                    var usuarioId = await repositorioPoliza.AddUser(model);
+                    var usuarioId = await repositorioPoliza.AddPoliza(model);
                     if (usuarioId > 0)
                     {
                         return Ok(usuarioId);
@@ -101,15 +117,70 @@ namespace ServiciosSeguros.Controllers
                         return Ok(0);
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-
+                    if (ex.Message.StartsWith("Reglas Invalidas: "))
+                    {
+                        throw ex;
+                    }
                     return BadRequest();
                 }
 
             }
 
             return BadRequest();
+        }
+
+        [HttpPost]
+        [Route("UpdatePoliza")]
+        public async Task<IActionResult> UpdatePoliza(TbPoliza model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await repositorioPoliza.UpdatePoliza(model);
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message.StartsWith("Reglas Invalidas: "))
+                    {
+                        throw ex;
+                    }
+
+                    if (ex.GetType().FullName == "Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException")
+                    {
+                        return NotFound();
+                    }
+
+                    return BadRequest();
+                }
+            }
+            return BadRequest();
+        }
+
+        [HttpPost]
+        [Route("DeletePoliza")]
+        public async Task<IActionResult> DeletePoliza(TbPoliza model)
+        {
+            int result = 0;
+
+            if (model == null)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                result = await repositorioPoliza.DeletePoliza(model.PolizaId);
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+
+                return BadRequest();
+            }
         }
 
     }

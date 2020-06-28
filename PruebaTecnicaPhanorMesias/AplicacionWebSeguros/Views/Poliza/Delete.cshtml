@@ -1,27 +1,29 @@
 ﻿@model AplicacionWebSeguros.Models.tbPoliza
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Eliminar Poliza";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
+<h2>Eliminar Poliza</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Está seguro de eliminar esta poliza ?</h3>
 <div>
-    <h4>tbPoliza</h4>
+    @Html.ActionLink("Volver a la lista", "ListaPolizas", "Poliza", new { area = "" }, new { @class = "btn btn-success" })
+</div>
+
+<div>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.PolizaId)
-        </dt>
+            Poliza Id
 
         <dd>
             @Html.DisplayFor(model => model.PolizaId)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
+            Nombre
         </dt>
 
         <dd>
@@ -29,23 +31,15 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Descriocion)
+            Descripción
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Descriocion)
         </dd>
-
+                
         <dt>
-            @Html.DisplayNameFor(model => model.TipoCubrimiento)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TipoCubrimiento)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TipoCubrimientoDesc)
+            Tipo de cubrimiento
         </dt>
 
         <dd>
@@ -53,7 +47,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Cubrimiento)
+            Cubrimiento (%)
         </dt>
 
         <dd>
@@ -61,7 +55,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.InicioVigencia)
+            Fecha Inicio vigencia
         </dt>
 
         <dd>
@@ -69,7 +63,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PeriodoCobertura)
+            Periodo cobertura (meses)
         </dt>
 
         <dd>
@@ -77,7 +71,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Precio)
+            Precio ($)
         </dt>
 
         <dd>
@@ -85,15 +79,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TipoRiesgo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TipoRiesgo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TipoRiesgoDesc)
+            Tipo de riesgo
         </dt>
 
         <dd>
@@ -105,9 +91,8 @@
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+        <div class="form-actions">
+            <input type="submit" value="Eliminar Poliza" class="btn btn-danger" /> 
         </div>
     }
 </div>

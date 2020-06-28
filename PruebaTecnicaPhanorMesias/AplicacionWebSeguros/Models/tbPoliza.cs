@@ -17,6 +17,8 @@ namespace AplicacionWebSeguros.Models
         [Range(1, int.MaxValue, ErrorMessage = "Seleccione tipo de cubrimiento")]
         public int? TipoCubrimiento { get; set; }
         public string TipoCubrimientoDesc { get; set; }
+        [Required(ErrorMessage = "El campo cubrimiento es obligatorio")]
+        [Range(0, 100, ErrorMessage = "El rango válido del cubrimento es 0 - 100")]
         public decimal? Cubrimiento { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]

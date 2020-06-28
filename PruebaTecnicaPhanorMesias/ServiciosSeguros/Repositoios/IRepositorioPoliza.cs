@@ -11,6 +11,9 @@ namespace ServiciosSeguros.Repositoios
         Task<List<TbTipoRiesgo>> GetTipoRiesgo();
         Task<List<TbTipoCubrimiento>> GetTipoCubrimiento();
         Task<List<ModeloSeguros.Poliza.TbPoliza>> GetPolizas();
-        Task<int> AddUser(TbPoliza poliza);
+        Task<ModeloSeguros.Poliza.TbPoliza> GetPoliza(int polizaId);
+        Task<int> AddPoliza(TbPoliza poliza);
+        Task UpdatePoliza(TbPoliza poliza);
+        Task<int> DeletePoliza(int? polizaId);
     }
 }

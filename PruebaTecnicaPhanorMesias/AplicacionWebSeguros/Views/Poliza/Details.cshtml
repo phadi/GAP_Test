@@ -1,18 +1,17 @@
 ﻿@model AplicacionWebSeguros.Models.tbPoliza
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detale de la Poliza";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Detale de la Poliza</h2>
 
 <div>
-    <h4>tbPoliza</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.PolizaId)
+            Poliza Id
         </dt>
 
         <dd>
@@ -20,7 +19,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
+            Nombre de la Poliza
         </dt>
 
         <dd>
@@ -28,7 +27,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Descriocion)
+            Descripción
         </dt>
 
         <dd>
@@ -36,7 +35,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TipoCubrimiento)
+            Tipo de cubrimiento Id
         </dt>
 
         <dd>
@@ -44,7 +43,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TipoCubrimientoDesc)
+            Tipo de cubrimiento
         </dt>
 
         <dd>
@@ -52,7 +51,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Cubrimiento)
+            Cubrimiento (%)
         </dt>
 
         <dd>
@@ -60,7 +59,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.InicioVigencia)
+            Fecha Inicio vigencia
         </dt>
 
         <dd>
@@ -68,7 +67,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PeriodoCobertura)
+            Periodo cobertura (meses)
         </dt>
 
         <dd>
@@ -76,7 +75,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Precio)
+            Precio ($)
         </dt>
 
         <dd>
@@ -84,7 +83,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TipoRiesgo)
+            Tipo de riesgo Id
         </dt>
 
         <dd>
@@ -92,7 +91,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TipoRiesgoDesc)
+            Tipo de riesgo
         </dt>
 
         <dd>
@@ -102,6 +101,5 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Volver a la lista", "ListaPolizas", "Poliza", new { area = "" }, new { @class = "btn btn-success" })
 </p>
