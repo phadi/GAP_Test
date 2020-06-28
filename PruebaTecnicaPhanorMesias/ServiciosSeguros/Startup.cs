@@ -32,6 +32,7 @@ namespace ServiciosSeguros
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDbContext<dbSegurosContext>(item => item.UseSqlServer(Configuration.GetConnectionString("dbSegurosDBConnection")));
             services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
+            services.AddScoped<IRepositorioPoliza, RepositorioPoliza>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

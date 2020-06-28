@@ -1,0 +1,107 @@
+﻿@model AplicacionWebSeguros.Models.tbPoliza
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tbPoliza</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PolizaId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PolizaId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descriocion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descriocion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoCubrimiento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoCubrimiento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoCubrimientoDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoCubrimientoDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cubrimiento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cubrimiento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InicioVigencia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InicioVigencia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PeriodoCobertura)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PeriodoCobertura)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Precio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Precio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoRiesgo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoRiesgo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoRiesgoDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoRiesgoDesc)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

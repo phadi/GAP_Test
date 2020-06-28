@@ -124,10 +124,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PolizaController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbPermisoPorRol.cs" />
+    <Compile Include="Models\tbPoliza.cs" />
     <Compile Include="Models\tbUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -175,6 +178,12 @@
     <Content Include="Views\Usuario\usuarioValido.cshtml" />
     <Content Include="Views\Usuario\Salir.cshtml" />
     <Content Include="Views\Usuario\Index.cshtml" />
+    <Content Include="Views\Poliza\Index.cshtml" />
+    <Content Include="Views\Poliza\ListaPolizas.cshtml" />
+    <Content Include="Views\Poliza\Create.cshtml" />
+    <Content Include="Views\Poliza\Edit.cshtml" />
+    <Content Include="Views\Poliza\Details.cshtml" />
+    <Content Include="Views\Poliza\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

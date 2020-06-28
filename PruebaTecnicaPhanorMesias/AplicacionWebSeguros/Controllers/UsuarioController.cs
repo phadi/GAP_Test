@@ -3,9 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
 
@@ -13,6 +11,7 @@ namespace AplicacionWebSeguros.Controllers
 {
     public class UsuarioController : Controller
     {
+        
         public ActionResult Index()
         {
             try
@@ -69,6 +68,15 @@ namespace AplicacionWebSeguros.Controllers
                 {
                     string respData = Json(body).Data.ToString();
                     tbUsuario userLog = JsonConvert.DeserializeObject<tbUsuario>(respData);
+
+                    //Permisos por rol
+                    urlServicio = WebConfigurationManager.AppSettings["urlServicioUsuario"].ToString() + "GetPermisos?rolId=" + userLog.RolId;
+                    body = llamaServicioUsuario(urlServicio);
+                    respData = Json(body).Data.ToString();
+                    List<tbPermisoPorRol> permisos = JsonConvert.DeserializeObject<List<tbPermisoPorRol>>(respData);
+                    userLog.permisos = permisos;
+
+                    //Asigna sesion
                     Session["usrValido"] = userLog;
                     return RedirectToAction("Index", "Home");
                 }
@@ -86,7 +94,7 @@ namespace AplicacionWebSeguros.Controllers
             tbUsuario userLog = (tbUsuario)Session["usrValido"];
             if (userLog == null)
             {
-                RedirectToAction("Login");
+                return RedirectToAction("Login");
             }
 
             return View(userLog);
@@ -111,8 +119,10 @@ namespace AplicacionWebSeguros.Controllers
             HttpWebResponse response = request.GetResponse() as HttpWebResponse;
             StreamReader reader = new StreamReader(response.GetResponseStream());
             string body = reader.ReadToEnd();
-            
+
             return body;
         }
+
+
     }
 }

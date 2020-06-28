@@ -89,5 +89,22 @@ namespace ServiciosSeguros.Controllers
 
             return BadRequest();
         }
+
+        [HttpGet]
+        [Route("GetPermisos")]
+        public async Task<IActionResult> GetPermisos(int rolId)
+        {
+            try
+            {
+                var permisos = await repositorioUsuario.GetPermisos(rolId);                
+
+                return Ok(permisos);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
+        }
     }
 }

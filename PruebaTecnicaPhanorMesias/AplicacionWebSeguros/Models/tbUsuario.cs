@@ -17,5 +17,6 @@ namespace AplicacionWebSeguros.Models
         public string Contrasena { get; set; }
         public int? RolId { get; set; }
         public string RolName { get; set; }
+        public List<tbPermisoPorRol> permisos { get; set; }
     }
 }

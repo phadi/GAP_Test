@@ -14,10 +14,13 @@
     <ul class="nav navbar-nav">
         @if (userLog != null)
         {
-            <li>@Html.ActionLink("Seguros", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
-            if (userLog.RolId == 1)
+            foreach (var item in userLog.permisos)
             {
-                <li>@Html.ActionLink("Usuarios", "Index", "Usuario", new { area = "" }, new { @class = "navbar-brand" })</li>
+                if (item.nivel == 1)
+                {
+                    <li>@Html.ActionLink(item.Titulo, item.Accion, item.Controlador, new { area = "" }, new { @class = "navbar-brand" })</li>
+                }
+
             }
         }
         <li>@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>

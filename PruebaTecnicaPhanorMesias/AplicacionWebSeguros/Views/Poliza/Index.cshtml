@@ -1,0 +1,15 @@
+﻿@using AplicacionWebSeguros.Models;
+@{
+    ViewBag.Title = "Gestión de Seguros";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    tbUsuario userLog = (tbUsuario)Session["usrValido"];
+}
+
+<h2>Gestión de Seguros</h2>
+<p> @Html.ActionLink("Polizas", "ListaPolizas", "Poliza", new { area = "" }, new { @class = "btn btn-primary" })</p>
+<p> @Html.ActionLink("Clientes", "Index", "Home", new { area = "" }, new { @class = "btn btn-primary" })</p>
+<p> @Html.ActionLink("Polizas Por Ciente", "Index", "Home", new { area = "" }, new { @class = "btn btn-primary" })</p>
+
+
+

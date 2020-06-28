@@ -12,6 +12,7 @@ namespace ModeloSeguros.Usuario
         public string Contrasena { get; set; }
         public int? RolId { get; set; }
         public string RolName { get; set; }
+        public List<TbPermisoPorRol> permisos { get; set; }
 
         public virtual TbRol Rol { get; set; }
     }
