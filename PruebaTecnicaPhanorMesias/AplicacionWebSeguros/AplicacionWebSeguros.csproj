@@ -131,6 +131,8 @@
     </Compile>
     <Compile Include="Models\tbPermisoPorRol.cs" />
     <Compile Include="Models\tbPoliza.cs" />
+    <Compile Include="Models\tbTipoCubrimiento.cs" />
+    <Compile Include="Models\TbTipoRiesgo.cs" />
     <Compile Include="Models\tbUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

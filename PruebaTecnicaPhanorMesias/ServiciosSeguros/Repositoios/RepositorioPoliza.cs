@@ -58,5 +58,31 @@ namespace ServiciosSeguros.Repositoios
                 throw ex;
             }
         }
+
+        public async Task<List<TbTipoCubrimiento>> GetTipoCubrimiento()
+        {
+            try
+            {
+                return await(from p in db.TbTipoCubrimiento
+                             select p).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<TbTipoRiesgo>> GetTipoRiesgo()
+        {
+            try
+            {
+                return await(from p in db.TbTipoRiesgo
+                             select p).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

@@ -8,6 +8,8 @@ namespace ServiciosSeguros.Repositoios
 {
     public interface IRepositorioPoliza
     {
+        Task<List<TbTipoRiesgo>> GetTipoRiesgo();
+        Task<List<TbTipoCubrimiento>> GetTipoCubrimiento();
         Task<List<ModeloSeguros.Poliza.TbPoliza>> GetPolizas();
         Task<int> AddUser(TbPoliza poliza);
     }
