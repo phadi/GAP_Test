@@ -1,10 +1,25 @@
-﻿@{
+﻿@using AplicacionWebSeguros.Models;
+@{
     ViewBag.Title = "Home Page";
+    tbUsuario userLog = (tbUsuario)Session["usrValido"];
 }
 
 <div class="jumbotron">
     <h1>Aplicación Web para Seguros</h1>
     <p class="lead">Front de aplicación Web para prueba técnica de Phanor Mesias.</p>
+    @if (userLog != null)
+    {
+        foreach (var item in userLog.permisos)
+        {
+            if (item.nivel == 1)
+            {
+                <div class="btn-group">
+                    @Html.ActionLink(item.Titulo, item.Accion, item.Controlador, new { area = "" }, new { @class = "btn btn-primary" })
+                </div>
+                    
+            }
+        }
+    }
 </div>
 
 <div class="row">
