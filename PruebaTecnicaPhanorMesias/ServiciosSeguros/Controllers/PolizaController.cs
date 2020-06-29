@@ -121,7 +121,7 @@ namespace ServiciosSeguros.Controllers
                 {
                     if (ex.Message.StartsWith("Reglas Invalidas: "))
                     {
-                        throw ex;
+                        return BadRequest();
                     }
                     return BadRequest();
                 }

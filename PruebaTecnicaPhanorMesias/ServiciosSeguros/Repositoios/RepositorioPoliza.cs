@@ -16,6 +16,11 @@ namespace ServiciosSeguros.Repositoios
             db = _db;
         }
 
+        public RepositorioPoliza()
+        {
+            db = new dbSegurosContext();
+        }
+
         public async Task<int> AddPoliza(Models.TbPoliza poliza)
         {
             List<string> valida = reglasNegocio(poliza);
