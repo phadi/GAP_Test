@@ -45,3 +45,12 @@ Es necesario definir la ruta de donde se despliegan los servicios. Esto se hace 
 <add key="urlServicioCliente" value="https://localhost:44346/api/Cliente/" />
 
 Se debe cambiar “localhost:44346” por la ruta en que se despliegan los servicios.
+
+La aplicación maneja 2 roles (administrador y Usuario) cada uno con permisos sobre las páginas. Los usuarios creados son:
+
+Usuario      : admin
+contraseña: 123456
+
+usuario       : usuario
+contraseña: 123456
+
