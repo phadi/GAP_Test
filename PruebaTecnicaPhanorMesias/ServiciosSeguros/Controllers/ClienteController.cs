@@ -109,6 +109,53 @@ namespace ServiciosSeguros.Controllers
         }
 
         [HttpGet]
+        [Route("GetClientesPoliza")]
+        public async Task<IActionResult> GetClientesPoliza()
+        {
+            try
+            {
+                var clientes = await repositorioCLiente.GetClientesPoliza();
+                if (clientes == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(clientes);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [Route("AddClientePoliza")]
+        public async Task<IActionResult> AddClientePoliza(List<TbPolizaPorCliente> lstPolizaCLiente)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    List<int> clientesPolizasId = new List<int>();
+                    foreach (TbPolizaPorCliente polizaCLiente in lstPolizaCLiente)
+                    {
+                        var clienteId = await repositorioCLiente.AddClientePoliza(polizaCLiente);
+                        clientesPolizasId.Add(clienteId);                        
+                    }
+
+                    return Ok(clientesPolizasId);
+                }
+                catch (Exception)
+                {
+                    return BadRequest();
+                }
+
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet]
         [Route("GetTipoDoc")]
         public async Task<IActionResult> GetTipoDoc()
         {

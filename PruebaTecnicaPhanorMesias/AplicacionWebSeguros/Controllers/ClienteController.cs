@@ -15,7 +15,59 @@ namespace AplicacionWebSeguros.Controllers
     public class ClienteController : Controller
     {
         tbUsuario userLog;
-        // GET: Cliente
+        public ActionResult PolizasCiente()
+        {
+            userLog = (tbUsuario)Session["usrValido"];
+            if (userLog == null)
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+
+            //Variables            
+            string urlServicio = WebConfigurationManager.AppSettings["urlServicioCliente"].ToString() + "GetClientesPoliza";
+            //LLama servicio
+            string body = llamaServicio(urlServicio, null, "GET");
+            string respData = Json(body).Data.ToString();
+            List<tbPolizaPorCliente> clientes = JsonConvert.DeserializeObject<List<tbPolizaPorCliente>>(respData);
+
+            return View(clientes);
+
+        }
+        public ActionResult CreatePP()
+        {
+            userLog = (tbUsuario)Session["usrValido"];
+            if (userLog == null)
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+            polizasClienteModel modelo = new polizasClienteModel();
+            List<SelectListItem> cmbPolizas = new List<SelectListItem>();
+            List<SelectListItem> cmbClientes = new List<SelectListItem>();
+
+            //Combo polizas
+            string urlServicio = WebConfigurationManager.AppSettings["urlServicioPoliza"].ToString() + "GetPolizas";            
+            string body = llamaServicio(urlServicio, null, "GET");
+            string respData = Json(body).Data.ToString();
+            List<tbPoliza> polizas = JsonConvert.DeserializeObject<List<tbPoliza>>(respData);
+
+            cmbPolizas = new SelectList(polizas, "PolizaId", "Nombre").ToList();
+            cmbPolizas.Insert(0, (new SelectListItem { Text = "Seleccionar", Value = "0" }));
+            ViewBag.PolizaId = cmbPolizas;
+
+            //Combo clientes                      
+            urlServicio = WebConfigurationManager.AppSettings["urlServicioCliente"].ToString() + "GetClientes";
+            body = llamaServicio(urlServicio, null, "GET");
+            respData = Json(body).Data.ToString();
+            List<tbCliente> clientes = JsonConvert.DeserializeObject<List<tbCliente>>(respData);
+
+            cmbClientes = new SelectList(clientes, "ClienteId", "NombreCompleto").ToList();
+            cmbClientes.Insert(0, (new SelectListItem { Text = "Seleccionar", Value = "0" }));
+            ViewBag.ClienteId = cmbClientes;
+
+            //Fecha
+            modelo.FechaInicio = DateTime.Now;
+            return View(modelo);
+        }
         public ActionResult ListaClientes()
         {
             userLog = (tbUsuario)Session["usrValido"];
@@ -333,6 +385,44 @@ namespace AplicacionWebSeguros.Controllers
             }
 
             return resp;
+        }
+
+        public JsonResult ActualizaListaPolizaCliente(string[] clientes, string[] polizas, string[] fecha)
+        {
+            string resp = "OK";
+            List<tbPolizaPorCliente> lstPolizaCLient = new List<tbPolizaPorCliente>();
+            for (int i = 0; i < clientes.Length; i++)
+            {
+                tbPolizaPorCliente polizaCLie = new tbPolizaPorCliente();
+                polizaCLie.ClientreId = int.Parse(clientes[i].Split('-')[0].Trim().ToString());
+                polizaCLie.PolizaId = int.Parse(polizas[i].Split('-')[0].Trim().ToString());
+                polizaCLie.FechaInicio = DateTime.Parse(fecha[i]);
+
+                lstPolizaCLient.Add(polizaCLie);
+            }
+
+            try
+            {
+                byte[] data = null;
+                string json = JsonConvert.SerializeObject(lstPolizaCLient);
+                data = UTF8Encoding.UTF8.GetBytes(json);
+
+                string urlServicio = WebConfigurationManager.AppSettings["urlServicioCliente"].ToString() + "AddClientePoliza";
+                //LLama servicio
+                string body = llamaServicio(urlServicio, data, "POST");
+
+                if (!string.IsNullOrEmpty(body))
+                    resp = "Registros agregados";
+                else
+                    resp = "Error en el servicio.";
+            }
+            catch (Exception ex)
+            {
+                resp = "Exception: " + ex.Message; ;
+
+            }
+
+            return Json(resp);
         }
 
         #endregion

@@ -29,6 +29,36 @@ namespace ServiciosSeguros.Repositoios
             }
         }
 
+        public async Task<int> AddClientePoliza(TbPolizaPorCliente clientePoliza)
+        {
+            try
+            {
+                string repe = string.Empty;
+                TbPolizaPorCliente poliCLiRep = (from p in db.TbPolizaPorCliente
+                                                 where p.FechaInicio == clientePoliza.FechaInicio
+                                                    && p.ClientreId == clientePoliza.ClientreId
+                                                    && p.PolizaId == clientePoliza.PolizaId
+                                                 select p).FirstOrDefault();
+
+                if (poliCLiRep == null)
+                {
+                    TbPoliza pol = db.TbPoliza.Find(clientePoliza.PolizaId);
+                    DateTime fi = (DateTime)clientePoliza.FechaInicio;
+                    DateTime ff = fi.AddMonths((int)pol.PeriodoCobertura);
+                    clientePoliza.FechaIfinal = ff;
+
+                    await db.TbPolizaPorCliente.AddAsync(clientePoliza);
+                    await db.SaveChangesAsync();
+                }               
+
+                return clientePoliza.PolizaPorClienteId;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public async Task<int> DeleteCliente(int? clienteId)
         {
             int result = 0;
@@ -96,6 +126,30 @@ namespace ServiciosSeguros.Repositoios
                                  Direccrion = p.Direccrion,
                                  Telefono = p.Telefono
                              }).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<ModeloSeguros.Cliente.TbPolizaPorCliente>> GetClientesPoliza()
+        {
+            try
+            {
+                return await (from pc in db.TbPolizaPorCliente
+                              join p in db.TbPoliza on pc.PolizaId equals p.PolizaId
+                              join c in db.TbCliente on pc.ClientreId equals c.ClienteId
+                              select new ModeloSeguros.Cliente.TbPolizaPorCliente
+                              {
+                                  PolizaPorClienteId = pc.PolizaPorClienteId,
+                                  ClientreId = c.ClienteId,
+                                  Clientre = c.NombreCompleto,
+                                  PolizaId = p.PolizaId,
+                                  Poliza = p.Nombre,
+                                  FechaInicio = pc.FechaInicio,
+                                  FechaIfinal = pc.FechaIfinal
+                              }).ToListAsync();
             }
             catch (Exception ex)
             {

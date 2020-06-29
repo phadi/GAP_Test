@@ -14,5 +14,7 @@ namespace ServiciosSeguros.Repositoios
         Task<int> AddCliente(TbCliente cliente);
         Task UpdateCliente(TbCliente cliente);
         Task<int> DeleteCliente(int? clienteId);
+        Task<List<ModeloSeguros.Cliente.TbPolizaPorCliente>> GetClientesPoliza();
+        Task<int> AddClientePoliza(TbPolizaPorCliente clientePoliza);
     }
 }

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<AplicacionWebSeguros.Models.tbPolizaPorCliente>
+
+@{
+    ViewBag.Title = "Polizas por Ciente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Polizas por Cliente</h2>
+
+<p>
+    @Html.ActionLink("Agregar Polizas por cliente", "CreatePP", new { area = "" }, new { @class = "btn btn-primary" })
+</p>
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>
+            Nombre del cliente
+        </th>
+        <th>
+            Nombre de la poliza
+        </th>
+        <th>
+            Fecha de inicio de la vigencia
+        </th>
+        <th>
+            Fecha final de la vigencia
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Clientre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Poliza)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaInicio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaIfinal)
+        </td>
+    </tr>
+}
+
+</table>

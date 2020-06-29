@@ -13,10 +13,12 @@
     {
         if (item.nivel == 2)
         {
-            @Html.ActionLink(item.Titulo, item.Accion, item.Controlador, new { area = "" }, new { @class = "btn btn-primary" }) 
+            <div class="btn-group">
+                @Html.ActionLink(item.Titulo, item.Accion, item.Controlador, new { area = "" }, new { @class = "btn btn-primary" })
+            </div>
+            
         }
-        <label> </label>
-    } 
+    }
 }
 
 

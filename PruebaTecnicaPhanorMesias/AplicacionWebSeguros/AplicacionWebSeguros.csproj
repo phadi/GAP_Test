@@ -130,6 +130,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\polizasClienteModel.cs" />
     <Compile Include="Models\tbCliente.cs" />
     <Compile Include="Models\tbPermisoPorRol.cs" />
     <Compile Include="Models\tbPoliza.cs" />
@@ -165,6 +166,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jsPersonalizado.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -194,6 +196,8 @@
     <Content Include="Views\Cliente\Create.cshtml" />
     <Content Include="Views\Cliente\Edit.cshtml" />
     <Content Include="Views\Cliente\Delete.cshtml" />
+    <Content Include="Views\Cliente\PolizasCiente.cshtml" />
+    <Content Include="Views\Cliente\CreatePP.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
